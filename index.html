@@ -409,6 +409,19 @@ html.theme-dark .brand-logo{
     @media (max-width: 980px){
       .grid{grid-template-columns:1fr}
     }
+    @media (max-width: 720px){
+      .sectionTitle{flex-direction:column; align-items:flex-start}
+      .toggleRow{width:100%; flex-wrap:wrap; justify-content:flex-start}
+    }
+    @media (max-width: 600px){
+      .heroLeft{padding:20px 18px}
+      .heroRight{padding:16px}
+      .ctaRow .btn{width:100%}
+      .meta{font-size:12px; gap:8px}
+      .footer{justify-content:flex-start}
+      .footerRight{grid-template-columns:1fr; justify-items:start}
+      .contactRow{justify-content:flex-start}
+    }
 
     .glowWrap{
       position:relative;
