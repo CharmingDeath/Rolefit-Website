@@ -1,0 +1,1507 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RoleFit › CVs built to get interviews</title>
+
+   <meta name="description" content="RoleFit optimises CVs, cover letters, and LinkedIn profiles for ATS screening and recruiter readability." />
+
+
+  <style>
+@import url("https://fonts.cdnfonts.com/css/nord");
+@import url("https://fonts.cdnfonts.com/css/mont");
+:root{
+  --font-heading: "Nord", "Montserrat", "Arial", sans-serif;
+  --font-body: "Mont", "Montserrat", "Arial", sans-serif;
+  
+  --ease-ios: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --bg1: #f6fbff;
+  --bg2: #eaf5ff;
+
+  --ink: #0f172a;           
+  --muted: #475569;
+  --line: rgba(2, 6, 23, 0.08);
+
+  --surface: rgba(255,255,255,0.78);
+  --surface-border: rgba(2,6,23,0.10);
+  --surface-shadow: 0 12px 30px rgba(2, 6, 23, 0.10);
+
+  --panel: rgba(255,255,255,0.75);
+  --card: rgba(255,255,255,0.78);
+
+  --glass-bg: rgba(255,255,255,0.72);
+  --glass-border: rgba(2, 6, 23, 0.10);
+
+  --accent: #4da8ff;
+  --accent2: #8fd1ff;
+  --accent3: #a7f3ff;
+
+  --shadow: 0 12px 30px rgba(2, 6, 23, 0.10);
+  --shadowBlue: 0 18px 45px rgba(74, 163, 255, 0.18);
+
+  --radius: 18px;
+  --max: 1080px;
+
+  --kicker-ink: #0f172a; 
+  --kicker-bg: rgba(77,168,255,.12);
+  --kicker-border: rgba(77,168,255,.22);
+}
+
+@media (prefers-color-scheme: dark){
+  body{
+    background: #060b14;
+  }
+  :root{
+    --bg1: #060b14;
+    --bg2: rgba(80, 150, 255, 0.22);
+
+    --ink: rgba(255,255,255,0.92);     
+    --muted: rgba(255,255,255,0.65);
+    --line: rgba(255,255,255,0.12);
+
+    --surface: rgba(255,255,255,.06);
+    --surface-border: rgba(255,255,255,.12);
+    --surface-shadow: 0 24px 70px rgba(0,0,0,.55);
+
+    --panel: rgba(255,255,255,0.10);
+    --card: rgba(255,255,255,0.14);
+
+    --glass-bg: rgba(255,255,255,0.07);
+    --glass-border: rgba(255,255,255,0.12);
+
+    --shadow: 0 24px 70px rgba(0,0,0,0.55);
+    --shadowBlue: 0 24px 80px rgba(40, 120, 255, 0.22);
+
+    
+    --kicker-ink: rgba(255,255,255,0.92); 
+    --kicker-bg: rgba(77,168,255,.14);
+    --kicker-border: rgba(143,209,255,.24);
+  }
+}
+
+html.theme-dark{
+  color-scheme: dark;
+  --bg1: #060b14;
+  --bg2: rgba(80, 150, 255, 0.22);
+
+  --ink: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.65);
+  --line: rgba(255,255,255,0.12);
+
+  --surface: rgba(255,255,255,.06);
+  --surface-border: rgba(255,255,255,.12);
+  --surface-shadow: 0 24px 70px rgba(0,0,0,.55);
+
+  --panel: rgba(255,255,255,0.10);
+  --card: rgba(255,255,255,0.14);
+
+  --glass-bg: rgba(255,255,255,0.07);
+  --glass-border: rgba(255,255,255,0.12);
+
+  --shadow: 0 24px 70px rgba(0,0,0,0.55);
+  --shadowBlue: 0 24px 80px rgba(40, 120, 255, 0.22);
+
+  --kicker-ink: rgba(255,255,255,0.92);
+  --kicker-bg: rgba(77,168,255,.14);
+  --kicker-border: rgba(143,209,255,.24);
+}
+html.theme-dark body{
+  background: #060b14;
+}
+html.theme-dark .introOverlay{
+  background: #060b14;
+}
+html.theme-dark .card{
+  color: rgba(10, 27, 45, 0.92);
+}
+html.theme-dark .card .desc,
+html.theme-dark .card .features,
+html.theme-dark .card .per{
+  color: rgba(10, 27, 45, 0.75);
+}
+html.theme-dark .card .price{
+  color: rgba(10, 27, 45, 0.98);
+}
+html.theme-dark .card .tag{
+  color: rgba(10, 27, 45, 0.8);
+}
+html.theme-dark .btnGhost{
+  color: rgba(10, 27, 45, 0.92);
+}
+html.theme-dark .brand-logo{
+  background: rgba(6, 11, 20, 0.92);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: #fff;
+    }
+    body,
+    .panel,
+    .card,
+    .pill,
+    .btn,
+    .brand-logo,
+    .miniCard,
+    .footer,
+    .footerRight,
+    .contactLink,
+    .kicker,
+    .tag,
+    .sectionTitle{
+      transition:
+        background-color 600ms var(--ease-ios),
+        color 600ms var(--ease-ios),
+        border-color 600ms var(--ease-ios),
+        box-shadow 600ms var(--ease-ios);
+    }
+    h1,h2,h3,h4,h5,h6,.sectionTitle strong,.miniTitle,.kicker,.tag{
+      font-family: var(--font-heading);
+    }
+
+.wrap{
+  width: min(var(--max), 100%);
+  margin: 0 auto;
+  padding: 26px 18px 36px;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 14px 0 22px;
+}
+
+.navlinks a{
+  color: var(--ink);
+  text-decoration: none;
+}
+.navlinks a:visited{
+  color: var(--ink);
+}
+   
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: auto;
+  height: 64px;
+  object-fit: contain;
+
+  padding: 4px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 10px 28px rgba(0, 120, 255, 0.18);
+
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@media (prefers-color-scheme: dark) {
+  .brand-logo {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.4),
+      0 14px 40px rgba(56, 189, 248, 0.35);
+  }
+
+  .brand:hover .brand-logo {
+    box-shadow:
+      0 6px 12px rgba(0, 0, 0, 0.6),
+      0 22px 60px rgba(56, 189, 248, 0.5);
+  }
+}
+.brand:active .brand-logo {
+  transform: scale(0.96);
+  transition-duration: 0.15s;
+}
+
+.brand-text {
+  font-size: 1.15rem;     
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: #0f172a;          
+}
+
+.brand:hover .brand-logo {
+  transform: scale(1.06);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 16px 40px rgba(0, 120, 255, 0.28);
+}
+
+.brand-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: #0f172a;
+}
+
+
+
+    .brand span{position:relative; z-index:1}
+    .navlinks{display:flex; gap:14px; color:var(--muted); font-weight:600}
+    .navlinks a{padding:8px 10px; border-radius:10px}
+    .navlinks a:hover{background:rgba(77,168,255,.10); color:var(--ink)}
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap:22px;
+      align-items:stretch;
+      margin-top:10px;
+    }
+    @media (max-width: 860px){
+      .hero{grid-template-columns:1fr}
+      .navlinks{display:none}
+    }
+
+    .panel{
+  background: var(--panel);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  box-shadow: var(--surface-shadow);
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+
+  transition:
+    background .55s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color .55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow .55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+    .heroLeft{padding:26px 22px}
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:13px; font-weight:700;
+      color: var(--kicker-ink);
+      background: var(--kicker-bg);
+      border: 1px solid var(--kicker-border);
+      padding:7px 10px; border-radius:999px;
+      margin-bottom:14px;
+    }
+    .kdot{
+      width:7px; height:7px; border-radius:99px;
+      background:var(--accent);
+      box-shadow:0 0 0 4px rgba(77,168,255,.18);
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:44px;
+      line-height:1.06;
+      letter-spacing:-0.04em;
+    }
+    @media (max-width: 520px){
+      h1{font-size:36px}
+    }
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.6;
+      max-width: 62ch;
+    }
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:22px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:800;
+      cursor:pointer;
+      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btnPrimary{
+      background:linear-gradient(135deg, var(--accent), #2f90ff);
+      color:#fff;
+      border-color:rgba(0,0,0,0);
+      box-shadow: 0 12px 28px rgba(77,168,255,.35);
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btnPrimary:hover{box-shadow: 0 16px 32px rgba(77,168,255,.42)}
+    .btnGhost{
+      background: rgba(255,255,255,.85);
+    }
+    .meta{
+      display:flex; gap:14px; flex-wrap:wrap; margin-top:26px; color:var(--muted); font-size:13px;
+    }
+    .meta b{color:var(--ink)}
+    .heroRight{padding:18px 18px; display:flex; flex-direction:column; justify-content:space-between; gap:14px}
+    .miniCard{
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 14px;
+      color: var(--ink);
+    }
+    .miniTitle{font-weight:900; margin:0 0 6px}
+    .miniText{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
+    .list{
+      margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:14px; line-height:1.6
+    }
+
+    .sectionTitle{
+      margin:34px 0 10px;
+      font-size:16px; letter-spacing:-0.02em;
+      color:var(--muted);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .sectionTitle strong{color:var(--ink); font-size:18px}
+    .toggleRow{display:flex; gap:8px; align-items:center; font-size:13px}
+    .pill{
+      border:1px solid var(--line);
+      background:#fff;
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:800;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .pill:hover{transform: translateY(-1px)}
+    .pill[aria-pressed="true"]{
+      background:rgba(77,168,255,.14);
+      border-color:rgba(77,168,255,.35);
+      color:#0b4e86;
+    }
+    @media (prefers-color-scheme: dark){
+      .pill{
+        background: rgba(255,255,255,0.08);
+        border-color: rgba(255,255,255,0.28);
+        color: var(--ink);
+      }
+      .pill[aria-pressed="true"]{
+        color:#bfe6ff;
+      }
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .glowWrap{
+      position:relative;
+      display:flex;
+      border-radius:22px;
+      padding:1px; 
+      overflow:hidden;
+      transform: translateZ(0);
+    }
+    .glowWrap:before{
+      content:"";
+      position:absolute;
+      inset:-120%;
+      background: conic-gradient(from 0deg,
+        rgba(77,168,255,0.90),
+        rgba(143,209,255,0.85),
+        rgba(167,243,255,0.80),
+        rgba(77,168,255,0.90)
+      );
+      animation: spin 6.5s linear infinite;
+      filter: blur(0px);
+    }
+    .glowWrap:after{
+      content:"";
+      position:absolute;
+      inset:1px;
+      border-radius:21px;
+      background: var(--card);
+      border:1px solid rgba(2,6,23,.06);
+    }
+
+    .card{
+      position:relative;
+      border-radius:21px;
+      padding:18px 16px;
+      background: var(--card);
+      border:1px solid rgba(2,6,23,.06);
+      z-index:1;
+      display: flex;
+      flex-direction: column;
+      flex:1;
+
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      color:#0b4e86;
+      background: rgba(77,168,255,.12);
+      border:1px solid rgba(77,168,255,.25);
+    }
+    .price{
+      margin:12px 0 0;
+      font-size:34px;
+      letter-spacing:-0.03em;
+      font-weight:950;
+    }
+    .per{
+      font-size:13px; color:var(--muted); font-weight:700; margin-left:6px;
+    }
+    .desc{margin:8px 0 0; color:var(--muted); line-height:1.55}
+    .features{
+      margin:12px 0 0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:14px;
+    }
+    .cardActions{display:flex; gap:10px; margin-top:auto; padding-top: 14px; flex-wrap:wrap}
+    .selectBtn{
+      width:100%;
+      justify-content:center;
+    }
+    .note{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .modalOverlay{
+      position:fixed; inset:0;
+      background: rgba(2,6,23,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:1000;
+    }
+    .modal{
+      width:min(680px, 100%);
+      background:#fff;
+      border-radius:20px;
+      border:1px solid rgba(2,6,23,.10);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+    .modalHead{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 10px}
+    .modalHead h3{margin:0; font-size:18px; letter-spacing:-0.02em}
+    .close{
+      border:1px solid var(--line);
+      background:#fff;
+      padding:8px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modalBody{padding:6px 10px 12px}
+    .fieldRow{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    @media (max-width: 620px){
+      .fieldRow{grid-template-columns:1fr}
+    }
+    label{display:block; font-size:13px; color:var(--muted); font-weight:800; margin:10px 0 6px}
+    input, textarea, select{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(2,6,23,.14);
+      outline:none;
+      font:inherit;
+      background:#fff;
+      color:#0f172a;
+      caret-color:#0f172a;
+    }
+    input::placeholder,
+    textarea::placeholder{
+      color:rgba(15,23,42,0.45);
+    }
+    textarea{min-height:110px; resize:vertical}
+    .modalCta{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .small{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.5;
+      margin-top:10px;
+    }
+
+@keyframes spin{to{transform: rotate(360deg)}}
+
+#siteContent{
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 700ms var(--ease-ios), transform 700ms var(--ease-ios);
+}
+.siteHidden{
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 700ms var(--ease-ios),
+    transform 700ms var(--ease-ios),
+    visibility 0s linear 700ms;
+}
+#siteContent:not(.siteHidden){
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.introOverlay{
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  z-index: 9998;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+@media (prefers-color-scheme: dark){
+  .introOverlay{
+    background: #060b14;
+  }
+}
+
+.introOrb::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(circle at 30% 30%, #bfe6ff 0%, transparent 45%),
+    radial-gradient(circle at 70% 60%, #7cc7ff 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, #e8f6ff 0%, transparent 55%);
+  filter: blur(18px);
+  animation: liquidMove 12s ease-in-out infinite alternate;
+  position: relative;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;           
+  transform: none;     
+}
+
+.introCanvas{
+  pointer-events: none;
+  position: absolute;
+  display: none;
+}
+
+.introOrb {
+  position: fixed;                
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 110px;
+  height: 110px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(2,6,23,0.10);
+
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+
+  box-shadow:
+    0 18px 40px rgba(2,6,23,0.10),
+    0 0 0 1px rgba(255,255,255,0.35) inset;
+
+  z-index: 9999;
+}
+
+
+.orbInner{
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(77,168,255,0.85),
+    rgba(143,209,255,0.28),
+    rgba(255,255,255,0.96)
+  );
+  border: 1px solid rgba(77,168,255,0.25);
+}
+
+.introHint{
+  position: absolute;
+  bottom: 52px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(15,23,42,0.55);
+}
+
+.introOverlay.fadeOut{
+  animation: introFade 520ms ease forwards;
+}
+
+@keyframes introFade{
+  to { opacity: 0; transform: scale(1.01); }
+}
+html{
+  scroll-behavior: smooth;
+}
+
+.footer{
+  margin-top:38px;
+  padding: 22px 16px 16px;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:flex-end;
+}
+
+.footerRight{
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 18px;
+  row-gap: 10px;
+  align-items: start;
+  font-size: 13px;
+  color: rgba(15,23,42,0.65);
+}
+
+.contactRow{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.tag{
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: rgba(15,23,42,0.4);
+}
+
+.contactLink{
+  color: rgba(15,23,42,0.85);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contactLink:hover{
+  text-decoration: underline;
+}
+
+.icon{
+  display: inline-flex;
+  opacity: 0.7;
+  transform: translateY(1px);
+}
+
+@media (prefers-color-scheme: dark){
+  .footerRight{
+    color: rgba(255,255,255,0.75);
+  }
+  .contactLink{
+    color: rgba(255,255,255,0.9);
+  }
+  .tag{
+    color: rgba(255,255,255,0.55);
+  }
+  .icon{
+    opacity: 0.85;
+  }
+}
+
+.introHint { display: none !important; }
+
+#introOrb {
+  border-radius: 9999px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#introOrb::before,
+#introOrb::after {
+  border-radius: 9999px;
+}
+
+#introOrb .orbInner {
+  border-radius: 9999px;
+  overflow: hidden;              
+  position: relative;
+  
+  
+  border: 1px solid rgba(77, 168, 255, 0.40);
+  box-shadow:
+    0 10px 28px rgba(2, 6, 23, 0.10),
+    0 0 0 10px rgba(255, 255, 255, 0.72);  
+}
+
+#introOrb .orbInner::before {
+  content: "";
+  position: absolute;
+  inset: -35%;                    
+  border-radius: 9999px;
+  filter: blur(10px);
+  opacity: 0.98;
+
+  background:
+    radial-gradient(circle at 30% 35%, rgba(77,168,255,0.95) 0%, rgba(77,168,255,0.00) 55%),
+    radial-gradient(circle at 65% 40%, rgba(143,209,255,0.85) 0%, rgba(143,209,255,0.00) 58%),
+    radial-gradient(circle at 55% 70%, rgba(167,243,255,0.65) 0%, rgba(167,243,255,0.00) 62%),
+    radial-gradient(circle at 45% 55%, rgba(255,255,255,0.70) 0%, rgba(255,255,255,0.00) 52%),
+    radial-gradient(circle at 35% 65%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.00) 55%);
+  
+  animation: orbLiquidDrift 6.5s ease-in-out infinite;
+}
+
+#introOrb .orbInner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.60), rgba(255,255,255,0.00) 55%),
+    radial-gradient(circle at 60% 65%, rgba(255,255,255,0.18), rgba(255,255,255,0.00) 60%);
+  opacity: 0.95;
+  pointer-events: none;
+  animation: orbLiquidDrift 14s ease-in-out infinite;
+}
+
+@keyframes orbLiquidDrift {
+  0%   { transform: translate(-2%, -3%) rotate(0deg) scale(1.02); }
+  25%  { transform: translate(3%, -1%)  rotate(14deg) scale(1.03); }
+  50%  { transform: translate(2%, 3%)   rotate(28deg) scale(1.02); }
+  75%  { transform: translate(-3%, 2%)  rotate(14deg) scale(1.03); }
+  100% { transform: translate(-2%, -3%) rotate(0deg) scale(1.02); }
+}
+
+
+.introOrb {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+
+
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+.introOrb:hover {
+  box-shadow:
+    0 0 0 10px rgba(74, 163, 255, 0.08),
+    0 25px 60px rgba(74, 163, 255, 0.18);
+}
+
+.introOrb:active {
+  transform: scale(0.92);
+  box-shadow:
+    0 0 0 6px rgba(74, 163, 255, 0.12),
+    0 12px 30px rgba(74, 163, 255, 0.25);
+}
+
+.introOrb.explode {
+  transform: scale(22);
+  opacity: 0;
+  transition:
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s ease;
+}
+
+.introCanvas.fadeOut {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.introOverlay.hide {
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0s linear 0.6s;
+}
+
+.introHint { display: none !important; }
+
+#introOrb{
+  width: 96px;
+  height: 96px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(143,209,255,0.55) 55%, rgba(77,168,255,0.85) 100%);
+  box-shadow: 0 18px 45px rgba(2,6,23,0.12);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform 480ms var(--ease-ios),
+    box-shadow 480ms var(--ease-ios);
+}
+
+#introOrb::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 45% 40%, rgba(255,255,255,0.9), rgba(255,255,255,0) 60%);
+  opacity: 0.9;
+  background-size: 180% 180%;
+  animation: orbDrift 26s ease-in-out infinite alternate;
+}
+
+#introOrb::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at center, rgba(120,190,255,0.45), rgba(120,190,255,0) 65%);
+  opacity: 0.45;
+  transform: scale(0.92);
+  transition:
+    opacity 320ms var(--ease-ios),
+    transform 320ms var(--ease-ios);
+  background-size: 220% 220%;
+  animation: orbDrift 34s ease-in-out infinite alternate-reverse;
+}
+
+#introOrb:active{
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+#introOrb:active::after{
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.introOrb.explode::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center,
+      rgba(140,200,255,0.9) 0%,
+      rgba(180,225,255,0.6) 35%,
+      rgba(255,255,255,0.8) 55%,
+      rgba(255,255,255,0.0) 70%
+    );
+  transform: scale(0.2);
+  animation: orbExplosion 0.9s cubic-bezier(0.22,1,0.36,1) forwards;
+  pointer-events: none;
+  filter: blur(2px);
+}
+
+@keyframes orbExplosion {
+  0% {
+    transform: scale(0.2);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+@keyframes orbDrift {
+  0%   { background-position: 20% 30%; transform: translate(0, 0) scale(1.02); }
+  25%  { background-position: 65% 25%; transform: translate(2%, -3%) scale(1.04); }
+  50%  { background-position: 35% 70%; transform: translate(-2%, 3%) scale(1.03); }
+  75%  { background-position: 80% 55%; transform: translate(3%, 1%) scale(1.05); }
+  100% { background-position: 30% 40%; transform: translate(-1%, -2%) scale(1.02); }
+}
+
+  </style>
+</head>
+
+<body>
+
+<div id="introOverlay" class="introOverlay">
+  <canvas id="introCanvas" class="introCanvas"></canvas>
+
+  <button id="introOrb" class="introOrb" aria-label="Enter RoleFit">
+  </button>
+
+  
+</div>
+
+  <div id="siteContent" class="wrap siteHidden">
+    <div class="nav">
+      <div class="brand" aria-label="RoleFit home" id="brandHome">
+        <img
+          src="assets/rolefit-logo.png"
+          alt="RoleFit logo"
+          class="brand-logo"
+        />
+
+      </div>
+
+      <div class="navlinks">    
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="panel heroLeft">
+        <div class="kicker"><span class="kdot"></span> ATS optimisation • AI + human review</div>
+        <h1>CVs built to get interviews.</h1>
+        <p class="sub">
+          RoleFit optimises CVs, cover letters, and LinkedIn profiles for ATS screening and recruiter readability.
+          Clean formatting, role-specific keywords, and clear impact-delivered fast.
+        </p>
+
+        <div class="ctaRow">
+          <button class="btn btnGhost" id="openContact">Quick enquiry</button>
+        </div>
+
+        <div class="meta">
+          <div><b>Delivery:</b> 48 hours</div>
+          <div><b>Best for:</b> Students & early-career</div>
+          <div><b>Format:</b> PDF + editable copy</div>
+        </div>
+      </div>
+
+      <aside class="panel heroRight" id="how">
+        <div class="miniCard">
+          <p class="miniTitle">How it works</p>
+          <p class="miniText">Simple, fast, and role-specific.</p>
+          <ol class="list">
+            <li>Choose a package</li>
+            <li>Pay and submit your details</li>
+            <li>Receive an interview-ready deliverable</li>
+          </ol>
+        </div>
+        <div class="miniCard">
+          <p class="miniTitle">What you receive</p>
+          <p class="miniText">Recruiter-friendly structure and ATS-safe formatting.</p>
+          <ul class="list">
+            <li>ATS-optimised CV</li>
+            <li>Keyword alignment</li>
+            <li>Clarity + stronger impact</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+
+    <div class="sectionTitle" id="pricing">
+      <div><strong>Pricing</strong></div>
+      <div class="toggleRow" aria-label="currency toggle">
+        <span class="pill" id="gbpBtn" aria-pressed="true">GBP £</span>
+        <span class="pill" id="inrBtn" aria-pressed="false">INR ₹</span>
+        <span class="pill" id="usdBtn" aria-pressed="false">USD $</span>
+      </div>
+    </div>
+
+    <section class="grid" aria-label="pricing cards">
+      
+      <div class="glowWrap">
+        <div class="card">
+          <span class="tag">Starter</span>
+          <div class="price" data-gbp="39" data-inr="2999" data-usd="49">£39<span class="per">one-time</span></div>
+          <p class="desc">ATS-optimised CV refresh for recruiter screening.</p>
+          <ul class="features">
+            <li>ATS-friendly formatting + structure</li>
+            <li>ATS keyword alignment</li>
+            <li>Clarity improvements</li>
+            <li>Delivery within 48 hours</li>
+          </ul>
+          <div class="cardActions">
+            <button class="btn btnPrimary selectBtn" data-plan="Starter">Choose Starter</button>
+          </div>
+        </div>
+      </div>
+
+    
+      <div class="glowWrap">
+        <div class="card">
+          <span class="tag">Professional</span>
+          <div class="price" data-gbp="79" data-inr="5999" data-usd="99">£79<span class="per">one-time</span></div>
+          <p class="desc">CV + tailored cover letter for a specific role.</p>
+          <ul class="features">
+            <li>ATS-optimised CV</li>
+            <li>Role-specific cover letter</li>
+            <li>Keyword mapping to job description</li>
+            <li>Delivery within 48 hours</li>
+          </ul>
+          <div class="cardActions">
+            <button class="btn btnPrimary selectBtn" data-plan="Professional">Choose Professional</button>
+          </div>
+        </div>
+      </div>
+
+     
+      <div class="glowWrap">
+        <div class="card">
+          <span class="tag">Premium</span>
+          <div class="price" data-gbp="129" data-inr="9999" data-usd="159">£129<span class="per">one-time</span></div>
+          <p class="desc">Full career pack to maximise interview callbacks.</p>
+          <ul class="features">
+            <li>ATS-optimised CV</li>
+            <li>Tailored cover letter</li>
+            <li>LinkedIn headline + About rewrite</li>
+            <li>Delivery within 24-48 hours</li>
+          </ul>
+          <div class="cardActions">
+            <button class="btn btnPrimary selectBtn" data-plan="Premium">Choose Premium</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   <footer class="footer" id="contact">
+  <div class="footerRight">
+
+    <div class="contactRow">
+      <span class="contactTag">Email</span>
+      <a class="contactLink" href="mailto:joshuadsouza069@gmail.com">joshuadsouza069@gmail.com</a>
+    </div>
+
+    <div class="contactRow">
+      <span class="contactTag">WhatsApp</span>
+      <a class="contactLink" href="https://wa.me/91" target="_blank" rel="noopener noreferrer">
+        +91 8169117711
+      </a>
+      <a class="contactLink" href="https://instagram.com/" target="_blank" rel="noopener noreferrer">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" width="16" height="16">
+            <path d="M7.5 2.5h9A5 5 0 0 1 21.5 7.5v9a5 5 0 0 1-5 5h-9a5 5 0 0 1-5-5v-9a5 5 0 0 1 5-5Z"
+              fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="12" cy="12" r="4.2"
+              fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>
+          </svg>
+        </span>
+        Instagram
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+  </div>
+
+  <div class="modalOverlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modalHead">
+        <h3 id="modalTitle">Start with RoleFit</h3>
+        <button class="close" id="closeModal" aria-label="Close">Close</button>
+      </div>
+
+      <div class="modalBody">
+        <p style="margin:0;color:#475569;line-height:1.6">
+          You selected <b id="selectedPlan">—</b>. Fill the details below. This helps you respond professionally and consistently.
+        </p>
+
+        <div class="fieldRow">
+          <div>
+            <label for="name">Full name</label>
+            <input id="name" placeholder="e.g., John Doe" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" placeholder="e.g., name@email.com" />
+          </div>
+        </div>
+
+        <div class="fieldRow">
+          <div>
+            <label for="role">Target role</label>
+            <input id="role" placeholder="e.g., Marketing Intern" />
+          </div>
+          <div>
+            <label for="deadline">Deadline</label>
+            <input id="deadline" placeholder="e.g., 48 hours" />
+          </div>
+        </div>
+
+        <label for="notes">Notes (optional)</label>
+        <textarea id="notes" placeholder="Paste a job link, job description, or key notes here..."></textarea>
+
+        <div class="modalCta">
+          <button class="btn btnPrimary" id="proceedBtn">Proceed</button>
+          <button class="btn btnGhost" id="copyMsgBtn">Copy message</button>
+        </div>
+
+        <div class="small">
+          Payments are processed via Stripe. “Proceed” opens your Stripe Payment Link for the selected plan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+(() => {
+  const overlay = document.getElementById("introOverlay");
+  const orb = document.getElementById("introOrb");
+  const canvas = document.getElementById("introCanvas");
+  const site = document.getElementById("siteContent");
+
+  if (!overlay || !orb || !canvas || !site) return;
+
+  const ctx = canvas.getContext("2d");
+  let w = 0, h = 0;
+  const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  let particles = [];
+  let anim = null;
+
+  function resize() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+  }
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function spawn(cx, cy) {
+    particles = [];
+    const count = 170;
+
+    for (let i = 0; i < count; i++) {
+      const a = rand(0, Math.PI * 2);
+      const s = rand(1.6, 6.0);
+      const palette = [
+        [77,168,255],
+        [143,209,255],
+        [167,243,255],
+        [15,23,42]
+      ];
+      const rgb = palette[Math.floor(Math.random() * palette.length)];
+
+      particles.push({
+        x: cx, y: cy,
+        vx: Math.cos(a) * s,
+        vy: Math.sin(a) * s,
+        r: rand(1.2, 2.6),
+        life: rand(42, 85),
+        t: 0,
+        rgb
+      });
+    }
+  }
+
+  function tick() {
+    
+    ctx.fillStyle = "rgba(255,255,255,0.10)";
+    ctx.fillRect(0, 0, w, h);
+
+    const cx = w / 2;
+    const cy = h / 2;
+
+    for (const p of particles) {
+      p.t += 1;
+
+      
+      const swirl = 0.016;
+      const ax = -Math.sin(p.t * 0.02) * swirl;
+      const ay =  Math.cos(p.t * 0.02) * swirl;
+
+      p.vx += ax;
+      p.vy += ay;
+
+      
+      p.vx *= 0.985;
+      p.vy *= 0.985;
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      const dx = p.x - cx;
+      const dy = p.y - cy;
+      const dist = Math.max(1, Math.sqrt(dx*dx + dy*dy));
+      p.x += (dx / dist) * 0.05;
+      p.y += (dy / dist) * 0.05;
+
+      const alpha = Math.max(0, 1 - p.t / p.life);
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${p.rgb[0]},${p.rgb[1]},${p.rgb[2]},${(0.85 * alpha).toFixed(3)})`;
+      ctx.arc(p.x, p.y, p.r * (0.7 + alpha), 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    particles = particles.filter(p => p.t < p.life);
+
+    if (particles.length) {
+      anim = requestAnimationFrame(tick);
+    } else {
+      
+      site.classList.remove("siteHidden");
+      overlay.classList.add("fadeOut");
+      setTimeout(() => {
+        overlay.remove();
+        if (anim) cancelAnimationFrame(anim);
+
+        const pricing = document.getElementById("pricing");
+        if (pricing) pricing.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 520);
+    }
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  site.classList.add("siteHidden");
+
+})();
+
+    const gbpBtn = document.getElementById("gbpBtn");
+    const inrBtn = document.getElementById("inrBtn");
+    const usdBtn = document.getElementById('usdBtn');
+    const prices = document.querySelectorAll(".price");
+
+    function setCurrency(mode) {
+  gbpBtn.setAttribute("aria-pressed", String(mode === "GBP"));
+  inrBtn.setAttribute("aria-pressed", String(mode === "INR"));
+  usdBtn.setAttribute("aria-pressed", String(mode === "USD")); // ✅ add
+
+  prices.forEach(el => {
+    const gbp = el.getAttribute("data-gbp");
+    const inr = el.getAttribute("data-inr");
+    const usd = el.getAttribute("data-usd"); // ✅ add
+
+    if (mode === "GBP") {
+      el.innerHTML = `£${gbp}<span class="per">one-time</span>`;
+    } else if (mode === "INR") {
+      el.innerHTML = `₹${inr}<span class="per">one-time</span>`;
+    } else {
+      el.innerHTML = `$${usd}<span class="per">one-time</span>`;
+    }
+  });
+}
+
+    gbpBtn.addEventListener("click", () => setCurrency("GBP"));
+    inrBtn.addEventListener("click", () => setCurrency("INR"));
+    usdBtn.addEventListener("click", () => setCurrency("USD"));
+
+
+    const overlay = document.getElementById("modalOverlay");
+    const closeModal = document.getElementById("closeModal");
+    const selectedPlanEl = document.getElementById("selectedPlan");
+    const openContact = document.getElementById("openContact");
+    const proceedBtn = document.getElementById("proceedBtn");
+    const copyMsgBtn = document.getElementById("copyMsgBtn");
+
+    let selectedPlan = null;
+
+    function openModal(plan){
+      selectedPlan = plan || "Quick enquiry";
+      selectedPlanEl.textContent = selectedPlan;
+      overlay.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+    function hideModal(){
+      overlay.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+
+    document.querySelectorAll(".selectBtn").forEach(btn => {
+      btn.addEventListener("click", () => openModal(btn.dataset.plan));
+    });
+
+    openContact.addEventListener("click", () => openModal("Quick enquiry"));
+    closeModal.addEventListener("click", hideModal);
+    overlay.addEventListener("click", (e) => { if(e.target === overlay) hideModal(); });
+    window.addEventListener("keydown", (e) => { if(e.key === "Escape") hideModal(); });
+
+    const STRIPE_LINKS = {
+      "Starter": "https://example.com/stripe-starter",
+      "Professional": "https://example.com/stripe-professional",
+      "Premium": "https://example.com/stripe-premium"
+    };
+
+    proceedBtn.addEventListener("click", () => {
+      if(!selectedPlan || !STRIPE_LINKS[selectedPlan]){
+        alert("Please choose a package first.");
+        return;
+      }
+      
+      window.open(STRIPE_LINKS[selectedPlan], "_blank", "noopener,noreferrer");
+    });
+
+    copyMsgBtn.addEventListener("click", async () => {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const role = document.getElementById("role").value.trim();
+      const deadline = document.getElementById("deadline").value.trim();
+      const notes = document.getElementById("notes").value.trim();
+
+      const msg =
+`Hi RoleFit,
+
+I’d like to purchase the ${selectedPlan} package.
+
+Name: ${name || "—"}
+Email: ${email || "—"}
+Target role: ${role || "—"}
+Deadline: ${deadline || "—"}
+
+Notes:
+${notes || "—"}`;
+
+      try{
+        await navigator.clipboard.writeText(msg);
+        copyMsgBtn.textContent = "Copied";
+        setTimeout(() => copyMsgBtn.textContent = "Copy message", 1100);
+      }catch{
+        alert("Copy failed. You can manually copy from the fields.");
+      }
+    });
+  </script>
+  <script>
+const introOrb = document.getElementById("introOrb");
+const introOverlay = document.getElementById("introOverlay");
+const siteContent = document.getElementById("siteContent");
+const introCanvas = document.getElementById("introCanvas");
+const brandHome = document.getElementById("brandHome");
+
+function showIntro() {
+  if (!introOverlay || !siteContent || !introOrb) return;
+  introOverlay.classList.remove("hide");
+  introOverlay.style.display = "";
+  introOverlay.style.opacity = "";
+  if (introCanvas) introCanvas.style.opacity = "";
+  introOrb.style.transform = "translate(-50%, -50%) scale(1)";
+  introOrb.style.transition = "transform 700ms cubic-bezier(.16,1,.3,1)";
+  siteContent.classList.add("siteHidden");
+  window.scrollTo(0, 0);
+}
+
+introOrb.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  history.replaceState(null, "", location.pathname);
+  window.scrollTo(0, 0);
+
+  introOrb.style.transform = "translate(-50%, -50%) scale(24)";
+  introOrb.style.transition = "transform 700ms cubic-bezier(.16,1,.3,1)";
+
+  if (introCanvas) introCanvas.style.opacity = "0";
+
+  requestAnimationFrame(() => {
+    introOverlay.classList.add("hide");
+    siteContent.classList.remove("siteHidden");
+    window.scrollTo(0, 0);
+  });
+});
+
+if (brandHome) {
+  brandHome.addEventListener("click", (e) => {
+    e.preventDefault();
+    showIntro();
+  });
+}
+</script>
+<script>
+const canvas = document.getElementById("introCanvas");
+const ctx = canvas.getContext("2d");
+const orb = document.getElementById("introOrb");
+
+
+function resize() {
+  if (!orb) return;
+  const dpr = window.devicePixelRatio || 1;
+  const size = orb.offsetWidth;
+  canvas.width = size * dpr;
+  canvas.height = size * dpr;
+  canvas.style.width = size + "px";
+  canvas.style.height = size + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+resize();
+window.addEventListener("resize", resize);
+
+let t = 0;
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const r = canvas.width / 2;
+  ctx.save();
+  ctx.translate(r, r);
+
+  const g = ctx.createRadialGradient(
+    Math.sin(t * 0.6) * 12,
+    Math.cos(t * 0.7) * 12,
+    20,
+    0,
+    0,
+    r
+  );
+  g.addColorStop(0, "#9fd8ff");
+  g.addColorStop(0.6, "#e6f6ff");
+  g.addColorStop(1, "#ffffff");
+
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(0, 0, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  t += 0.01;
+  requestAnimationFrame(draw);
+}
+draw();
+
+</script>
+<script>
+const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+function applyTheme(e) {
+  document.documentElement.classList.toggle("theme-dark", e.matches);
+}
+applyTheme(darkQuery);
+if (darkQuery.addEventListener) {
+  darkQuery.addEventListener("change", applyTheme);
+} else if (darkQuery.addListener) {
+  darkQuery.addListener(applyTheme);
+}
+</script>
+
+</body>
+</html>
