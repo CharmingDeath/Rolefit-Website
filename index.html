@@ -634,7 +634,12 @@ html.theme-dark .brand-logo{
 .introCanvas{
   pointer-events: none;
   position: absolute;
-  display: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 160px;
+  z-index: 4;
 }
 
 .introOrb {
@@ -677,10 +682,16 @@ html.theme-dark .brand-logo{
 
 .introHint{
   position: absolute;
-  bottom: 52px;
-  font-size: 13px;
+  left: 50%;
+  top: calc(50% + 86px);
+  transform: translateX(-50%);
+  font-size: 12px;
   font-weight: 700;
-  color: rgba(15,23,42,0.55);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(15,23,42,0.85);
+  opacity: 0.8;
+  animation: hintFloat 2.8s ease-in-out infinite;
 }
 
 .introOverlay.fadeOut{
@@ -756,8 +767,6 @@ html{
     opacity: 0.85;
   }
 }
-
-.introHint { display: none !important; }
 
 #introOrb {
   border-radius: 9999px;
@@ -872,15 +881,13 @@ html{
   transition: opacity 0.6s ease, visibility 0s linear 0.6s;
 }
 
-.introHint { display: none !important; }
-
 #introOrb{
   width: 96px;
   height: 96px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(143,209,255,0.55) 55%, rgba(77,168,255,0.85) 100%);
-  box-shadow: 0 18px 45px rgba(2,6,23,0.12);
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -890,32 +897,21 @@ html{
   transition:
     transform 480ms var(--ease-ios),
     box-shadow 480ms var(--ease-ios);
+  animation: none;
 }
 
-#introOrb::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(circle at 45% 40%, rgba(255,255,255,0.9), rgba(255,255,255,0) 60%);
-  opacity: 0.9;
-  background-size: 180% 180%;
-  animation: orbDrift 26s ease-in-out infinite alternate;
+#introOrb:hover{
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: none;
 }
 
+#introOrb::before,
 #introOrb::after{
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(circle at center, rgba(120,190,255,0.45), rgba(120,190,255,0) 65%);
-  opacity: 0.45;
-  transform: scale(0.92);
-  transition:
-    opacity 320ms var(--ease-ios),
-    transform 320ms var(--ease-ios);
-  background-size: 220% 220%;
-  animation: orbDrift 34s ease-in-out infinite alternate-reverse;
+  opacity: 0;
 }
 
 #introOrb:active{
@@ -968,6 +964,19 @@ html{
   100% { background-position: 30% 40%; transform: translate(-1%, -2%) scale(1.02); }
 }
 
+@keyframes hintFloat {
+  0%   { opacity: 0.5; transform: translate(-50%, 0); }
+  50%  { opacity: 0.9; transform: translate(-50%, -4px); }
+  100% { opacity: 0.5; transform: translate(-50%, 0); }
+}
+
+
+@media (prefers-color-scheme: dark){
+  .introHint{
+    color: rgba(255,255,255,0.7);
+  }
+}
+
   </style>
 </head>
 
@@ -979,7 +988,7 @@ html{
   <button id="introOrb" class="introOrb" aria-label="Enter RoleFit">
   </button>
 
-  
+  <div class="introHint">Tap to enter</div>
 </div>
 
   <div id="siteContent" class="wrap siteHidden">
@@ -1431,6 +1440,9 @@ function showIntro() {
 
 introOrb.addEventListener("click", (e) => {
   e.preventDefault();
+  if (window.triggerIntroExplosion) {
+    window.triggerIntroExplosion();
+  }
 
   history.replaceState(null, "", location.pathname);
   window.scrollTo(0, 0);
@@ -1459,46 +1471,112 @@ const canvas = document.getElementById("introCanvas");
 const ctx = canvas.getContext("2d");
 const orb = document.getElementById("introOrb");
 
+let particles = [];
+let radius = 48;
+let dpr = 1;
+let explodeUntil = 0;
+
+function makeParticles(count) {
+  particles = Array.from({ length: count }, (_, i) => {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = Math.sqrt(Math.random()) * radius;
+    const x = Math.cos(angle) * dist;
+    const y = Math.sin(angle) * dist;
+    const vx = (Math.random() - 0.5) * 0.1;
+    const vy = (Math.random() - 0.5) * 0.1;
+    const size = Math.random() * 1.2 + 0.6;
+    const alpha = Math.random() * 0.4 + 0.25;
+    const isBlue = i % 2 === 0;
+    return {
+      x,
+      y,
+      homeX: x,
+      homeY: y,
+      vx,
+      vy,
+      size,
+      alpha,
+      hue: isBlue ? 208 : 0,
+      sat: isBlue ? 70 : 0,
+      light: isBlue ? 75 : 100,
+      isBlue
+    };
+  });
+}
+
+function isDarkMode() {
+  return document.documentElement.classList.contains("theme-dark")
+    || window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
+window.triggerIntroExplosion = function triggerIntroExplosion() {
+  const now = performance.now();
+  explodeUntil = now + 650;
+  for (const p of particles) {
+    const angle = Math.atan2(p.y, p.x) + (Math.random() - 0.5) * 0.6;
+    const burst = 1.2 + Math.random() * 1.6;
+    p.vx += Math.cos(angle) * burst;
+    p.vy += Math.sin(angle) * burst;
+  }
+};
 
 function resize() {
   if (!orb) return;
-  const dpr = window.devicePixelRatio || 1;
-  const size = orb.offsetWidth;
+  dpr = window.devicePixelRatio || 1;
+  const size = Math.max(160, Math.round(orb.offsetWidth * 1.9));
+  radius = size * 0.32;
   canvas.width = size * dpr;
   canvas.height = size * dpr;
   canvas.style.width = size + "px";
   canvas.style.height = size + "px";
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  makeParticles(520);
 }
 resize();
 window.addEventListener("resize", resize);
 
-let t = 0;
 function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const r = canvas.width / 2;
+  const w = canvas.width / dpr;
+  const h = canvas.height / dpr;
+  ctx.clearRect(0, 0, w, h);
   ctx.save();
-  ctx.translate(r, r);
+  ctx.translate(w / 2, h / 2);
 
-  const g = ctx.createRadialGradient(
-    Math.sin(t * 0.6) * 12,
-    Math.cos(t * 0.7) * 12,
-    20,
-    0,
-    0,
-    r
-  );
-  g.addColorStop(0, "#9fd8ff");
-  g.addColorStop(0.6, "#e6f6ff");
-  g.addColorStop(1, "#ffffff");
+  for (const p of particles) {
+    const now = performance.now();
+    const burstActive = now < explodeUntil;
+    p.vx += (p.homeX - p.x) * 0.001;
+    p.vy += (p.homeY - p.y) * 0.001;
+    p.vx += (Math.random() - 0.5) * (burstActive ? 0.06 : 0.02);
+    p.vy += (Math.random() - 0.5) * (burstActive ? 0.06 : 0.02);
+    p.vx *= burstActive ? 0.97 : 0.985;
+    p.vy *= burstActive ? 0.97 : 0.985;
 
-  ctx.fillStyle = g;
-  ctx.beginPath();
-  ctx.arc(0, 0, r, 0, Math.PI * 2);
-  ctx.fill();
+    p.x += p.vx;
+    p.y += p.vy;
+
+    const dist = Math.hypot(p.x, p.y);
+    if (dist > radius) {
+      const push = (dist - radius) * 0.02;
+      p.x -= (p.x / dist) * push;
+      p.y -= (p.y / dist) * push;
+      p.vx *= burstActive ? 0.96 : 0.9;
+      p.vy *= burstActive ? 0.96 : 0.9;
+    }
+
+    const x = p.x;
+    const y = p.y;
+    const dark = isDarkMode();
+    const hue = p.isBlue ? 208 : 0;
+    const sat = p.isBlue ? 70 : 0;
+    const light = p.isBlue ? 75 : (dark ? 100 : 10);
+    ctx.beginPath();
+    ctx.fillStyle = `hsla(${hue}, ${sat}%, ${light}%, ${p.alpha})`;
+    ctx.arc(x, y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
   ctx.restore();
-
-  t += 0.01;
   requestAnimationFrame(draw);
 }
 draw();
