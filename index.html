@@ -640,7 +640,7 @@ html.theme-dark .brand-logo{
   width: 160px;
   height: 160px;
   z-index: 4;
-  transition: transform 700ms var(--ease-ios), opacity 700ms var(--ease-ios);
+  transition: transform 900ms var(--ease-ios), opacity 900ms var(--ease-ios);
 }
 
 .introOrb {
@@ -684,8 +684,8 @@ html.theme-dark .brand-logo{
 .introHint{
   position: absolute;
   left: 50%;
-  top: calc(50% + 86px);
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -693,6 +693,7 @@ html.theme-dark .brand-logo{
   color: rgba(15,23,42,0.85);
   opacity: 0.8;
   animation: hintFloat 2.8s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .introOverlay.fadeOut{
@@ -901,14 +902,6 @@ html{
   animation: none;
 }
 
-#introOrb:hover{
-  transform: translate(-50%, -50%) scale(1.06);
-  box-shadow: none;
-}
- #introOrb:hover + .introCanvas{
-  transform: translate(-50%, -50%) scale(1.06);
-}
-
 #introOrb::before,
 #introOrb::after{
   content: "";
@@ -987,9 +980,10 @@ html{
 <body>
 
 <div id="introOverlay" class="introOverlay">
+  <canvas id="introCanvas" class="introCanvas"></canvas>
+
   <button id="introOrb" class="introOrb" aria-label="Enter RoleFit">
   </button>
-  <canvas id="introCanvas" class="introCanvas"></canvas>
 
   <div class="introHint">Tap to enter</div>
 </div>
@@ -1013,10 +1007,10 @@ html{
     <section class="hero">
       <div class="panel heroLeft">
         <div class="kicker"><span class="kdot"></span> ATS optimisation • AI + human review</div>
-        <h1>CVs engineered for interview shortlists.</h1>
+        <h1>CVs built to get interviews.</h1>
         <p class="sub">
-          RoleFit engineers CVs for modern hiring systems and recruiter decision-making.
-          Every document is ATS-safe, role-aligned, and refined for clarity, ensuring your experience is evaluated accurately and shortlisted with confidence.
+          RoleFit optimises CVs, cover letters, and LinkedIn profiles for ATS screening and recruiter readability.
+          Clean formatting, role-specific keywords, and clear impact-delivered fast.
         </p>
 
         <div class="ctaRow">
@@ -1434,12 +1428,9 @@ function showIntro() {
   introOverlay.classList.remove("hide");
   introOverlay.style.display = "";
   introOverlay.style.opacity = "";
-  if (introCanvas) {
-    introCanvas.style.opacity = "";
-    introCanvas.style.transform = "";
-  }
+  if (introCanvas) introCanvas.style.opacity = "";
   introOrb.style.transform = "translate(-50%, -50%) scale(1)";
-  introOrb.style.transition = "transform 700ms cubic-bezier(.16,1,.3,1)";
+  introOrb.style.transition = "transform 900ms cubic-bezier(.16,1,.3,1)";
   siteContent.classList.add("siteHidden");
   window.scrollTo(0, 0);
 }
@@ -1456,10 +1447,7 @@ introOrb.addEventListener("click", (e) => {
   introOrb.style.transform = "translate(-50%, -50%) scale(24)";
   introOrb.style.transition = "transform 700ms cubic-bezier(.16,1,.3,1)";
 
-  if (introCanvas) {
-    introCanvas.style.transform = "translate(-50%, -50%) scale(6)";
-    introCanvas.style.opacity = "0";
-  }
+  if (introCanvas) introCanvas.style.opacity = "0";
 
   requestAnimationFrame(() => {
     introOverlay.classList.add("hide");
@@ -1484,7 +1472,13 @@ let particles = [];
 let radius = 48;
 let dpr = 1;
 let explodeUntil = 0;
-let explodeSpin = 0;
+let cursorX = 0;
+let cursorY = 0;
+let hasPointer = false;
+let centerOffsetX = 0;
+let centerOffsetY = 0;
+let targetOffsetX = 0;
+let targetOffsetY = 0;
 
 function makeParticles(count) {
   particles = Array.from({ length: count }, (_, i) => {
@@ -1492,9 +1486,9 @@ function makeParticles(count) {
     const dist = Math.sqrt(Math.random()) * radius;
     const x = Math.cos(angle) * dist;
     const y = Math.sin(angle) * dist;
-    const vx = (Math.random() - 0.5) * 0.1;
-    const vy = (Math.random() - 0.5) * 0.1;
-    const size = Math.random() * 1.2 + 0.6;
+    const vx = (Math.random() - 0.5) * 0.15;
+    const vy = (Math.random() - 0.5) * 0.15;
+    const size = Math.random() * 1.6 + 0.7;
     const alpha = Math.random() * 0.4 + 0.25;
     const isBlue = i % 2 === 0;
     return {
@@ -1521,11 +1515,10 @@ function isDarkMode() {
 
 window.triggerIntroExplosion = function triggerIntroExplosion() {
   const now = performance.now();
-  explodeUntil = now + 650;
-  explodeSpin = 0.09 + Math.random() * 0.05;
+  explodeUntil = now + 900;
   for (const p of particles) {
     const angle = Math.atan2(p.y, p.x) + (Math.random() - 0.5) * 0.6;
-    const burst = 1.2 + Math.random() * 1.6;
+    const burst = 0.8 + Math.random() * 1.1;
     p.vx += Math.cos(angle) * burst;
     p.vy += Math.sin(angle) * burst;
   }
@@ -1534,52 +1527,70 @@ window.triggerIntroExplosion = function triggerIntroExplosion() {
 function resize() {
   if (!orb) return;
   dpr = window.devicePixelRatio || 1;
-  const size = Math.max(160, Math.round(orb.offsetWidth * 1.9));
-  radius = size * 0.32;
+  const size = Math.max(520, Math.round(orb.offsetWidth * 7));
+  radius = size * 0.52;
   canvas.width = size * dpr;
   canvas.height = size * dpr;
   canvas.style.width = size + "px";
   canvas.style.height = size + "px";
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  makeParticles(520);
+  makeParticles(260);
 }
 resize();
 window.addEventListener("resize", resize);
+window.addEventListener("mousemove", (e) => {
+  cursorX = e.clientX;
+  cursorY = e.clientY;
+  hasPointer = true;
+  targetOffsetX = (cursorX - window.innerWidth / 2) * 0.18;
+  targetOffsetY = (cursorY - window.innerHeight / 2) * 0.18;
+});
+window.addEventListener("mouseleave", () => {
+  hasPointer = false;
+  targetOffsetX = 0;
+  targetOffsetY = 0;
+});
+
+introOverlay.addEventListener("click", (e) => {
+  if (e.target && e.target.closest("#introOrb")) return;
+  introOrb.click();
+});
 
 function draw() {
   const w = canvas.width / dpr;
   const h = canvas.height / dpr;
   ctx.clearRect(0, 0, w, h);
   ctx.save();
-  ctx.translate(w / 2, h / 2);
+  centerOffsetX += (targetOffsetX - centerOffsetX) * 0.08;
+  centerOffsetY += (targetOffsetY - centerOffsetY) * 0.08;
+  ctx.translate(w / 2 + centerOffsetX, h / 2 + centerOffsetY);
 
   for (const p of particles) {
     const now = performance.now();
     const burstActive = now < explodeUntil;
-    p.vx += (p.homeX - p.x) * 0.001;
-    p.vy += (p.homeY - p.y) * 0.001;
-    p.vx += (Math.random() - 0.5) * (burstActive ? 0.06 : 0.02);
-    p.vy += (Math.random() - 0.5) * (burstActive ? 0.06 : 0.02);
+    const mx = hasPointer ? (cursorX - window.innerWidth / 2) / (window.innerWidth / 2) : 0;
+    const my = hasPointer ? (cursorY - window.innerHeight / 2) / (window.innerHeight / 2) : 0;
+    const wave = Math.sin((now / 1200) + (p.homeX + p.homeY) * 0.01) * 0.6;
+    const targetX = p.homeX + mx * radius * 0.25 + wave;
+    const targetY = p.homeY + my * radius * 0.25 - wave;
+    p.vx += (targetX - p.x) * 0.0015;
+    p.vy += (targetY - p.y) * 0.0015;
+    p.vx += (Math.random() - 0.5) * (burstActive ? 0.05 : 0.015);
+    p.vy += (Math.random() - 0.5) * (burstActive ? 0.05 : 0.015);
     p.vx *= burstActive ? 0.97 : 0.985;
     p.vy *= burstActive ? 0.97 : 0.985;
-
-    if (burstActive) {
-      const ax = -p.y * explodeSpin;
-      const ay = p.x * explodeSpin;
-      p.vx += ax * 0.02;
-      p.vy += ay * 0.02;
-    }
 
     p.x += p.vx;
     p.y += p.vy;
 
     const dist = Math.hypot(p.x, p.y);
     if (dist > radius) {
-      const push = (dist - radius) * 0.02;
-      p.x -= (p.x / dist) * push;
-      p.y -= (p.y / dist) * push;
-      p.vx *= burstActive ? 0.96 : 0.9;
-      p.vy *= burstActive ? 0.96 : 0.9;
+      const pull = (dist - radius) * 0.04;
+      const ease = burstActive ? 0.015 : 0.04;
+      p.x -= (p.x / dist) * pull * ease;
+      p.y -= (p.y / dist) * pull * ease;
+      p.vx *= burstActive ? 0.96 : 0.85;
+      p.vy *= burstActive ? 0.96 : 0.85;
     }
 
     const x = p.x;
